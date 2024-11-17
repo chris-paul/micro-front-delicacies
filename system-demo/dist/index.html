@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>system.js demo</title>
+  </head>
+
+  <body>
+    <!-- 主应用 基坐 -->
+    <script type="systemjs-importmap">
+      { // 这里模拟 webpack打包的 react 项目
+        "imports": {
+          "react-dom": "https://cdn.bootcdn.net/ajax/libs/react-dom/18.2.0/cjs/react-dom-server-legacy.browser.development.js",
+          "react": "https://cdn.bootcdn.net/ajax/libs/react-is/18.2.0/cjs/react-is.development.js"
+        }
+      }
+    </script>
+    <div id="root"></div>
+    <script src="https://cdn.bootcdn.net/ajax/libs/systemjs/6.10.1/system.min.js"></script>
+     <!-- 子应用 基座 -->
+    <script>
+      System.import("./index.js").then(() => {});
+    </script>
+  </body>
+</html>
