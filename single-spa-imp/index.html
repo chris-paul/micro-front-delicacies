@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- <link rel="preload" href="https://cdn.jsdelivr.net/npm/single-spa@5.9.0/lib/system/single-spa.min.js" as="script"> -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/single-spa@5.9.0/lib/system/single-spa.min.js"></script> -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/single-spa/5.9.3/umd/single-spa.min.js"></script>
+    <div id="app"></div>
+    <script>
+        // /a 加载app1 /b加载app2
+        let app1 = {
+            bootstrap: [
+                async() => console.info('bootstrap app1 1'),
+                async() => console.info('bootstrap app1 2')
+            ],
+            mount: async() => {
+                // ReactDOm.render
+                app.innerHTML = 'app1'
+                console.info('mount app1 1')
+            },
+            unmount: async() => {
+                // ReactDOm.render
+                app.innerHTML = ''
+                console.info('unmount app1 1')
+            }
+        }
+        let app2 = {
+            bootstrap: async() => console.info('bootstrap app2'),
+            mount: async() => {
+                // ReactDOm.render
+                app.innerHTML = 'app 2'
+                console.info('mount app2 1')
+            },
+            unmount: async() => {
+                // ReactDOm.render
+                app.innerHTML = 'app'
+                console.info('unmount app2 1')
+            }
+        }
+        const { registerApplication, start } = singleSpa;
+        // 注册 名字(name) ，运行的时候 加载哪一个应用(bootstrap), 什么时候加载(match)
+        registerApplication('a', async() => app1, location => location.hash.startsWith('#/a'))
+        registerApplication('b', async() => app2, location => location.hash.startsWith('#/b'))
+        // 开启路径的监控，路径切换的时候 可以调用对应的mount unmount
+        start();
+    </script>
+</body>
+</html>
